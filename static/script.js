@@ -10,7 +10,7 @@ var mymap = L.map('mapid').setView([48.838, 2.586], 13);
     }).addTo(mymap);
 
     var popup = L.popup();
-    L.marker([48.838, 2.586]).addTo(mymap).bindTooltip("Votre image");
+    L.marker([48.838, 2.586]).addTo(mymap).bindTooltip("Estimated position of your image");
 
     function onMapClick(e) {
         popup

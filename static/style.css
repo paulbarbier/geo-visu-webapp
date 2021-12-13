@@ -53,8 +53,8 @@ h1 {
 	margin-bottom: 30px;  
 	text-align: center; 
 	line-height: 130%; 
-	color: #0F056B;
 	font-size: 300%;
+	font-family: Futura;
 }
 
 h2, h3, h4 {
@@ -92,5 +92,17 @@ label{
 }
 
 #col {
+  column-count: 2;
+}
+
+.card-text{
+	vertical-align: middle;
+	text-align: center;
+	font-size:15px;
+	margin-top: -0.5rem;
+	margin-bottom: -0.5rem;
+}
+
+.text_columns{
   column-count: 2;
 }

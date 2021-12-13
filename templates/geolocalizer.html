@@ -11,7 +11,6 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 </head>
 <body>
-
       <div class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
           <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
@@ -43,25 +42,57 @@
     </ul>
     {% endif %}
     {% endwith %}
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <input type="submit" value="Upload">
-    </form>
-    {% if image_filename %}
-    <img src="{{ url_for('render_image', filename=image_filename) }}" width="512" height="340">
-    {% endif %}
-    {% if position_match %}
-    <h2>Position match</h2>
-    x = {{position_match["x"]}}
-    y = {{position_match["y"]}}
-    {% endif %}
 
-    <div style = "margin-top: 40px;">
-        <td style="border: none">
-        <div id="mapid" style="width: 500px; height: 500px;"></div>
-            <tr><td style="text-align: center; border: none"></td></tr>
-            <p> Estimated position of your image. </p>
-    </div>
+    <center>Please select an image. Keep in mind that only PNG, JPEG and JPG formats will be accepted by our server.</center> <br>
+
+    <div align="center">
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <input type="submit" value="Upload">
+        </form>
+    </div> 
+
+    <div class="album py-5 bg-light">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <div class="shadow-lg bg-white rounded">
+                  <div style = "margin-top: 30px;">
+                    <td style="border: none">
+                    <div id="mapid" style="width: 636px; height: 400px;"></div>
+                </div>
+                  <div class="card-body">
+                    <center class="card-text"> 
+                        Estimated position of your image
+                        {% if position_match %}
+                          : ({{position_match["x"]}}, {{position_match["y"]}})
+                        {% endif %} 
+                    </center>
+                    <div class="d-flex justify-content-between align-items-center"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="shadow-lg bg-white rounded">
+                  <div style = "margin-top: 30px;">
+                  {% if image_filename %}
+                    <img src="{{ url_for('render_image', filename=image_filename) }}" width="636" height="400">
+                  {% endif %}
+                  {% if not image_filename %}
+                    <img src=""{{ url_for('render_image', filename="blank.jpg") }}"" width="636" height="400">
+                  {% endif %}
+                  <div class="card-body">
+                    <center class="card-text"> 
+                          Your image
+                    </center>
+                    <div class="d-flex justify-content-between align-items-center">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
