@@ -45,6 +45,17 @@ def render_image(filename):
     #return redirect(url_for("static", filename = "uploads/" + filename))
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
+@app.route("/database")
+def database():
+    return render_template("database.html")
+
+@app.route("/geolocalizer")
+def geolocalizer():
+    return render_template("geolocalizer.html")
+
+@app.route("/about")
+deg about():
+    return render_template("about.html")
 
 if __name__ == "__main__":
     app.debug = True
