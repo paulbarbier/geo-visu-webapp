@@ -22,7 +22,7 @@
             <li><a href="/" class="nav-link px-2 link-dark">Home</a></li>
             <li><a href="{{ url_for("geolocalizer") }}" class="nav-link px-2 link-dark">Geolocalizer</a></li>
             <li><a href="{{ url_for("database") }}" class="nav-link px-2 link-dark">Database</a></li>
-            <li><a href="{{ url_for("about") }}" class="nav-link px-2 link-dark">About</a></li>
+            <li><a href="{{ url_for("about") }}" class="nav-link px-2 link-dark">About us</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -33,7 +33,35 @@
       </div>
     <div class="b-example-divider"></div>
 
-    <h1>Homepage</h1>
+    <h1>Geolocalizer</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit" value="Upload">
+    </form>
+    {% if image_filename %}
+    <img src="{{ url_for('render_image', filename=image_filename) }}" width="512" height="340">
+    {% endif %}
+    {% if position_match %}
+    <h2>Position match</h2>
+    x = {{position_match["x"]}}
+    y = {{position_match["y"]}}
+    {% endif %}
+
+    <div style = "margin-top: 40px;">
+        <td style="border: none">
+        <div id="mapid" style="width: 500px; height: 500px;"></div>
+            <tr><td style="text-align: center; border: none"></td></tr>
+            <p> Estimated position of your image. </p>
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
