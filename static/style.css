@@ -1,0 +1,96 @@
+.description {
+	text-align:center;
+	width:75%;
+	padding:10px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #C0DFEF;
+}
+.emphase {
+	font-style: italic;
+}
+.code {
+	width:38%;
+	padding: 10px;
+	font-family: monospace;
+	font-size: larger
+	color: grey;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #D6D2D2;
+}
+.button {
+	display:block;
+	margin: 5px auto;
+	witdth: 10%
+}
+.cmjx-note {
+	transform: translate(100px);
+    font-size: 0.8em;
+    color: #DD4A68;
+}
+.cmjx-highlight {
+	border: 2px solid #DD4A68;
+	padding: 8px;
+	margin-right: 4px;
+}
+
+.body {
+	min-width: 760px;
+	margin: 0pt;
+	padding: 0;
+	font-family: arial, helvetica, sans-serif;
+}
+
+.illus {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+} 
+
+h1 {
+	margin-top: 20px;  	
+	margin-bottom: 30px;  
+	text-align: center; 
+	line-height: 130%; 
+	color: #0F056B;
+	font-size: 300%;
+}
+
+h2, h3, h4 {
+	margin-left: 100px;
+	font-size: 200%;
+	font-style: italic; 
+	text-align: left;
+	color: #0F056B;
+}
+
+h2 {margin-top: 2em; margin-bottom: 1em;}
+
+.iframe {
+	display: block;
+	text-align:center;
+    border: 1px solid black;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.output {
+    background: #eee;
+}
+
+label{
+  display: inline-block;
+  background-color: #2CA2EF;
+  color: black;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+#col {
+  column-count: 2;
+}

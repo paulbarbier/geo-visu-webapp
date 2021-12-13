@@ -2,8 +2,38 @@
 <html lang="en">
 <head>
     <title>GeoVisu web app</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for("static", filename = "headers.css") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename = "style.css") }}">
+    <script async="true" src="{{ url_for("static", filename = "script.js") }}"></script>
+    <script async="true" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=AM_CHTML"> </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 </head>
 <body>
+
+    <div class="b-example-divider"></div>
+      <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+          </a>
+
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 link-dark">Home</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Geolocalizer</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Database</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+          </ul>
+
+          <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2">Login</button>
+            <button type="button" class="btn btn-primary">Sign-up</button>
+          </div>
+        </header>
+      </div>
+    <div class="b-example-divider"></div>
+
     <h1>Homepage</h1>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -19,12 +49,21 @@
         <input type="submit" value="Upload">
     </form>
     {% if image_filename %}
-    <img src="{{ url_for('render_image', filename=image_filename) }}" width="500" height="500">
+    <img src="{{ url_for('render_image', filename=image_filename) }}" width="512" height="340">
     {% endif %}
     {% if position_match %}
     <h2>Position match</h2>
     x = {{position_match["x"]}}
     y = {{position_match["y"]}}
     {% endif %}
+
+    <div style = "margin-top: 40px;">
+        <td style="border: none">
+        <div id="mapid" style="width: 500px; height: 500px;"></div>
+            <tr><td style="text-align: center; border: none"></td></tr>
+            <p> Estimated position of your image. </p>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
