@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GeoVisu web app</title>
+</head>
+<body>
+    <h1>Homepage</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit" value="Upload">
+    </form>
+    {% if image_filename %}
+    <img src="{{ url_for('render_image', filename=image_filename) }}" width="500" height="500">
+    {% endif %}
+    {% if position_match %}
+    <h2>Position match</h2>
+    x = {{position_match["x"]}}
+    y = {{position_match["y"]}}
+    {% endif %}
+</body>
+</html>
