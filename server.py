@@ -21,7 +21,7 @@ def allowed_file(filename):
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("index.html")
 
 @app.route("/geolocalizer", methods = ["GET", "POST"])
 def geolocalizer(image_filename = None, position_match = None):
