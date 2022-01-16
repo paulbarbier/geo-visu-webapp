@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+document.getElementById("file").onchange = function() {
+    document.getElementById("form").submit();
+};
+=======
 var mymap = L.map('mapid').setView([48.838, 2.586], 13);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -20,3 +25,4 @@ var mymap = L.map('mapid').setView([48.838, 2.586], 13);
             // var newMarker = new L.marker(e.latlng).addTo(mymap); // uncomment to add markers when clicked
     }
     mymap.on('click', onMapClick); 
+>>>>>>> abfaa2964d6560bbe0212c0769c61fd00d8c814f
