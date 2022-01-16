@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarsExample03">
         <ul class="navbar-nav me-auto mb-2 mb-sm-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/">Home</a>
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="{{ url_for("geolocalizer") }}">Geolocalizer</a>
@@ -31,7 +31,7 @@
             <a class="nav-link" aria-current="page" href="{{ url_for("database") }}">Database</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for("about") }}">About us</a>
+            <a class="nav-link" aria-current="page" href="{{ url_for("about") }}">About us</a>
           </li>
         </ul>
       </div>
@@ -40,48 +40,14 @@
 
   <div class="b-example-divider"></div>
 
-  <h1>About us</h1>
+  <h1>Homepage</h1>
 
-  <center>Hi! We are a team of 4 Computer Science students from <a href="https://www.ecoledesponts.fr">Ecole des Ponts ParisTech</a>. <br> If you encounter any issue with this app, please contact us so we can fix it as soon as possible!</center> <br>
+  <center>Hi, welcome to GeoVisu! You can't remember where you took this awesome picture the last time you went hiking? <br> <a href="{{ url_for("about") }}">We </a> designed this Web app just for you! GeoVisu allows you to safely upload any picture and returns the GPS coordinates of the place where you took your photo. Isn't it wonderful? </center> <br>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-auto">
-        <div class="thumbnail">
-          <img src="{{ url_for('render_image', filename="salma.jpg") }}">
-          <div class="caption">
-            <p><center>Salma Hammani (<b>Optimization</b>) <br> (<a href="mailto:salma.hammani@eleves.enpc.fr">salma.hammani@eleves.enpc.fr</a>) </p></center>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-auto">
-        <div class="thumbnail">
-          <img src="{{ url_for('render_image', filename="hannes.jpg") }}">
-          <div class="caption">
-            <p><center>Hannes Van Overloop (<b>Optimization</b>) <br> (<a href="mailto:hannes.van-overloop@eleves.enpc.fr">hannes.van-overloop@eleves.enpc.fr</a>) </p></center>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-auto">
-        <div class="thumbnail">
-          <img src="{{ url_for('render_image', filename="paul.jpg") }}">
-          <div class="caption">
-            <p><center>Paul Barbier (<b>Computer Vision</b>) <br> (<a href="mailto:Paul.BARBIER@eleves.enpc.fr">Paul.BARBIER@eleves.enpc.fr</a>) </p></center>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-auto">
-        <div class="thumbnail">
-          <img src="{{ url_for('render_image', filename="alex.jpg") }}">
-          <div class="caption">
-            <p><center>Alexandre Lutt (<b>Computer Vision</b>) <br> (<a href="mailto:alexandre.lutt@eleves.enpc.fr">alexandre.lutt@eleves.enpc.fr</a>) </p></center>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div>
+    <center><img src="{{ url_for('render_image', filename="data1.jpg") }}" width="40%" height="40%"></center>
+  </div> <br>
+
 
   <div class="container">
     <footer class="py-3 my-4">
