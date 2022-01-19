@@ -118,7 +118,9 @@
     }).addTo(mymap);
 
     var myIcon = L.icon({
+      {% if image_filename %}
       iconUrl: "{{ url_for('render_image', filename=image_filename) }}",
+      {% endif %}
       iconSize:     [55, 55], // size of the icon
       iconAnchor:   [22, 54], // point of the icon which will correspond to marker's location
       popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
