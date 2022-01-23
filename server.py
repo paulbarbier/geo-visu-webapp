@@ -2,15 +2,17 @@
 
 import os
 from flask import Flask
-from flask import render_template, flash, request, redirect, url_for, send_from_directory
+from flask import render_template, flash, request, redirect, url_for, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
+from skyline_computation import compute_skyline
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 UPLOAD_FOLDER = "uploads"
 
-#dummy function for testing purposes
-def compute_match(image_filename):
-    return {"x" : 1, "y" : 1}
+#function which computes the coordinates of the uploaded image
+def compute_geolocalization(image_filename):
+    skyline_filename = compute_skyline(image_filename)
+    return 46.128, 6.399, skyline_filename
 
 app = Flask(__name__)
 app.secret_key = "kvhkjbi187897JNBBbhb!:" #needed for flash messages
@@ -37,12 +39,35 @@ def geolocalizer(image_filename = None, position_match = None):
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
-            position_match = compute_match(image_filename)
+            lat, lon, skyline_filename = compute_geolocalization(filename)
 
-            return render_template("geolocalizer.html", image_filename = filename, position_match = position_match)
+            return render_template("geolocalizer.html", image_filename = skyline_filename, position_match = {"x" : lat, "y": lon})
         else:
             flash("Error! Please provide an image with PNG, JPEG or JPG format.")
     return render_template("geolocalizer.html", image_filename = image_filename, position_match = position_match)
+
+@app.route("/upload_image/", methods = ["POST"])
+def upload_image():
+    lat = 0
+    lon = 0
+    skyline_filename = ""
+    
+    if "image" not in request.files:
+        flash("Error! Please provide an image.")
+        return redirect(request.url)
+    image = request.files["image"]
+    if image.filename == "":
+        flash("Error! Please provide a non-empty image.")
+        return redirect(request.url)
+    if image and allowed_file(image.filename):
+        filename = secure_filename(image.filename)
+        image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+        lat, lon, skyline_filename = compute_geolocalization(filename)
+    else:
+        flash("Error! Please provide an image with PNG, JPEG or JPG format.")
+
+    return jsonify({"lat" : lat, "lon" : lon, "skyline_filename" : skyline_filename})
 
 @app.route("/uploads/<filename>")
 def render_image(filename):
