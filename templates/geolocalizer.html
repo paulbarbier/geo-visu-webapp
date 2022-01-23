@@ -43,26 +43,13 @@
   <div class="b-example-divider"></div>
 
   <h1>Geolocalizer</h1>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul>
-  {% for message in messages %}
-    <li>{{ message }}</li>
-  {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
 
   <center>Please select an image. Keep in mind that only PNG, JPEG and JPG formats will be accepted by our server.</center> <br>
 
-  <div align="center">
-      <form method="post" enctype="multipart/form-data">
-          <input type="file" name="image" onchange="form.submit()">
-      </form>
-      {% if position_match %}
-        <button onclick="UpdateLocation({{position_match["x"]}}, {{position_match["y"]}})">Compute location</button>
-      {% endif %} 
-  </div> 
+  <div id="upload-form" align="center">
+    <input enctype="multipart/form-data" id="image-file-input" type="file" />
+    <input type="submit" id="upload-image-button" value="Compute localization" onclick="sendImage();"/>
+  </div>
 
   <div class="album py-5 bg-light">
     <div class="container">
@@ -83,15 +70,7 @@
         <div class="col-sm">
           <div class="shadow-lg bg-white rounded">
             <div id="img_pos" style = "margin-top: 30px;">
-            {% if not image_filename %}
-              <img id="display_img" src="{{ url_for('render_image', filename="blank.jpg") }}" style="width: 636px; height: 400px;">
-            {% endif %}
-            {% if image_filename %}
-              <img id="display_img" src="{{ url_for('render_image', filename=image_filename) }}" style="width: 636px; height: 400px;">
-            {% endif %}
-            {% if image_computed %}
-              <img id="display_img" style="width: 636px; height: 400px;">
-            {% endif %}
+            <img id="display_img" src="{{ url_for('render_image', filename="blank.jpg") }}" style="width: 636px; height: 400px;">
             <div class="card-body">
               <center class="card-text">
               {% if image_filename %}
@@ -107,6 +86,20 @@
   </div>
 
   <script>
+    function sendImage() {
+        var form_image = new FormData();
+        var image_input = document.getElementById("image-file-input");
+        form_image.append("image", image_input.files[0])
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "upload_image/");
+        xhr.addEventListener("load", function () {
+          var response = JSON.parse(xhr.response);
+          UpdateLocation(response["lat"], response["lon"], response["skyline_filename"]);
+	      });
+        xhr.send(form_image);
+    }
+
     var mymap = L.map('mapid').setView([48.838, 2.586], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
@@ -116,15 +109,6 @@
         tileSize: 512,
         zoomOffset: -1
     }).addTo(mymap);
-
-    var myIcon = L.icon({
-      {% if image_filename %}
-      iconUrl: "{{ url_for('render_image', filename=image_filename) }}",
-      {% endif %}
-      iconSize:     [55, 55], // size of the icon
-      iconAnchor:   [22, 54], // point of the icon which will correspond to marker's location
-      popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
 
     var popup = L.popup();
     L.marker([48.838, 2.586]).addTo(mymap).bindTooltip("Ecole des Ponts ParisTech");
@@ -136,13 +120,20 @@
           .openOn(mymap);   
     }
 
-    function UpdateLocation(x_img, y_img, image_computed) {
-      document.getElementById("updated").innerHTML = "Estimated position of your image : (" + x_img + "°N, " + y_img + "°E)";
-      document.getElementById("display_img").src = "{{ url_for('render_image', filename="data1_skyline.jpg") }}"
-      var new_pos = [x_img, y_img];
+    function UpdateLocation(lat_img, lon_img, image_computed_filename) {
+      var myIcon = L.icon({
+        iconUrl: "uploads/" + image_computed_filename,
+        iconSize:     [55, 55], // size of the icon
+        iconAnchor:   [22, 54], // point of the icon which will correspond to marker's location
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      });
+
+      document.getElementById("updated").innerHTML = "Estimated position of your image : (" + lat_img + "°N, " + lon_img + "°E)";
+      document.getElementById("display_img").src = "uploads/" + image_computed_filename;
+      var new_pos = [lat_img, lon_img];
       mymap.flyTo(new_pos);
       L.marker(new_pos, {icon: myIcon}).addTo(mymap).bindTooltip("Your image has been taken here!");
-    } 
+    }
 
     mymap.on('click', onMapClick); 
   </script>

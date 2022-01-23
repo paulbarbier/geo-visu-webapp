@@ -25,26 +25,9 @@ def allowed_file(filename):
 def home():
     return render_template("home.html")
 
-@app.route("/geolocalizer", methods = ["GET", "POST"])
-def geolocalizer(image_filename = None, position_match = None):
-    if request.method == "POST":
-        if "image" not in request.files:
-            flash("Error! Please provide an image.")
-            return redirect(request.url)
-        image = request.files["image"]
-        if image.filename == "":
-            flash("Error! Please provide a non-empty image.")
-            return redirect(request.url)
-        if image and allowed_file(image.filename):
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-
-            lat, lon, skyline_filename = compute_geolocalization(filename)
-
-            return render_template("geolocalizer.html", image_filename = skyline_filename, position_match = {"x" : lat, "y": lon})
-        else:
-            flash("Error! Please provide an image with PNG, JPEG or JPG format.")
-    return render_template("geolocalizer.html", image_filename = image_filename, position_match = position_match)
+@app.route("/geolocalizer")
+def geolocalizer():
+    return render_template("geolocalizer.html")
 
 @app.route("/upload_image/", methods = ["POST"])
 def upload_image():
